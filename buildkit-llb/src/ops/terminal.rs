@@ -104,7 +104,7 @@ fn serialization() {
         definition
             .def
             .iter()
-            .map(|bytes| Node::get_digest(&bytes))
+            .map(|bytes| Node::get_digest(bytes))
             .collect::<Vec<_>>(),
         crate::utils::test::to_vec(vec![
             "sha256:a60212791641cbeaa3a49de4f7dff9e40ae50ec19d1be9607232037c1db16702",

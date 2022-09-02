@@ -171,7 +171,7 @@ impl<'a> SingleBorrowedOutput<'a> for ImageSource {
     }
 }
 
-impl<'a> SingleOwnedOutput<'static> for Arc<ImageSource> {
+impl SingleOwnedOutput<'static> for Arc<ImageSource> {
     fn output(&self) -> OperationOutput<'static> {
         OperationOutput::owned(self.clone(), OutputIdx(0))
     }

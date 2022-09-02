@@ -35,7 +35,7 @@ impl<'a> OperationOutput<'a> {
     pub(crate) fn operation(&self) -> &dyn Operation {
         match self.kind {
             OperationOutputKind::Owned(ref op, ..) => op.as_ref(),
-            OperationOutputKind::Borrowed(ref op, ..) => *op,
+            OperationOutputKind::Borrowed(op, ..) => op,
         }
     }
 
@@ -99,12 +99,12 @@ pub mod test {
         ($op:expr, $(|$name:ident| $value:expr,)*) => ($crate::check_op!($op, $(|$name| $value),*));
         ($op:expr, $(|$name:ident| $value:expr),*) => {{
             #[allow(unused_imports)]
-            use crate::serialization::{Context, Operation};
+            use $crate::serialization::{Context, Operation};
 
             let mut context = Context::default();
             let serialized = $op.serialize(&mut context).unwrap();
 
-            $(crate::check_op_property!(serialized, context, $name, $value));*
+            $($crate::check_op_property!(serialized, context, $name, $value));*
         }};
     }
 
@@ -148,7 +148,7 @@ pub mod test {
                     .registered_nodes_iter()
                     .map(|node| node.digest.clone())
                     .collect::<Vec<_>>(),
-                crate::utils::test::to_vec($value),
+                $crate::utils::test::to_vec($value),
             );
         };
 
@@ -161,13 +161,13 @@ pub mod test {
                 .collect::<Vec<_>>();
 
             caps.sort();
-            assert_eq!(caps, crate::utils::test::to_vec($value));
+            assert_eq!(caps, $crate::utils::test::to_vec($value));
         }};
 
         ($serialized:expr, $context:expr, description, $value:expr) => {
             assert_eq!(
                 $serialized.metadata.description,
-                crate::utils::test::to_map($value),
+                $crate::utils::test::to_map($value),
             );
         };
 

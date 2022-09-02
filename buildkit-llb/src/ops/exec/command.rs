@@ -27,6 +27,7 @@ pub struct Command<'a> {
     description: HashMap<String, String>,
     caps: HashMap<String, bool>,
     ignore_cache: bool,
+    insecure: bool,
 }
 
 impl<'a> Command<'a> {
@@ -44,6 +45,7 @@ impl<'a> Command<'a> {
             description: Default::default(),
             caps: Default::default(),
             ignore_cache: false,
+            insecure: false,
         }
     }
 
@@ -127,6 +129,10 @@ impl<'a> Command<'a> {
             self.other_mounts.push(mount.into_owned());
         }
 
+        self
+    }
+    pub fn insecure(mut self, insecure: bool) -> Self {
+        self.insecure = insecure;
         self
     }
 }
@@ -293,11 +299,17 @@ impl<'a> Operation for Command<'a> {
                 .unzip()
         };
 
+
+        let security_mode = match self.insecure {
+            true => SecurityMode::Insecure,
+            false => SecurityMode::Sandbox,
+        };
+
         let head = pb::Op {
             op: Some(Op::Exec(ExecOp {
                 mounts,
                 network: NetMode::Unset.into(),
-                security: SecurityMode::Sandbox.into(),
+                security: security_mode.into(),
                 meta: Some(self.context.clone().into()),
             })),
 
