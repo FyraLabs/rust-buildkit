@@ -38,7 +38,7 @@ pub struct ImageSpecification {
     pub history: Option<Vec<LayerHistoryItem>>,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum Architecture {
     /// 64-bit x86, the most mature port
@@ -75,7 +75,7 @@ pub enum Architecture {
     S390x,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum OperatingSystem {
     Darwin,
@@ -162,7 +162,7 @@ pub struct ImageRootfs {
     pub diff_ids: Vec<String>,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct LayerHistoryItem {
     /// A combined date and time at which the layer was created.
     #[serde(skip_serializing_if = "Option::is_none")]

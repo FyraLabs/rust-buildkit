@@ -8,7 +8,8 @@ pub(crate) use self::id::OperationId;
 pub(crate) use self::operation::Operation;
 pub(crate) use self::output::Node;
 
-pub(crate) type Result<T> = std::result::Result<T, ()>;
+// re-export anyhow, because too lazy to refactor
+pub(crate) type Result<T> = anyhow::Result<T>;
 
 #[derive(Default)]
 pub struct Context {

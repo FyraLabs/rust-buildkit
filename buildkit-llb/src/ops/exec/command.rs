@@ -83,6 +83,36 @@ impl<'a> Command<'a> {
         self
     }
 
+    pub fn cap(mut self, name: &str, value: bool) -> Self {
+        self.caps.insert(name.into(), value);
+        self
+    }
+
+    pub fn caps_iter<T>(mut self, iter: T) -> Self
+    where
+        T: IntoIterator<Item = (&'a str, bool)>,
+    {
+        for (name, value) in iter {
+            self.caps.insert(name.into(), value);
+        }
+        self
+    }
+
+    pub fn description(mut self, key: &str, value: &str) -> Self {
+        self.description.insert(key.into(), value.into());
+        self
+    }
+
+    pub fn description_iter<T>(mut self, iter: T) -> Self
+    where
+        T: IntoIterator<Item = (&'a str, &'a str)>,
+    {
+        for (key, value) in iter {
+            self.description.insert(key.into(), value.into());
+        }
+        self
+    }
+
     pub fn cwd<P>(mut self, path: P) -> Self
     where
         P: Into<PathBuf>,

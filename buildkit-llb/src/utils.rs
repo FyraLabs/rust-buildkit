@@ -48,6 +48,8 @@ impl<'a> OperationOutput<'a> {
     }
 }
 
+// TODO: Fix stack overflow for implementing this into From<T> trait
+
 impl Into<i64> for OutputIdx {
     fn into(self) -> i64 {
         self.0.into()

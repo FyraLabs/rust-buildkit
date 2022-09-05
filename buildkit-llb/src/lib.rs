@@ -1,5 +1,5 @@
 //#![deny(warnings)]
-#![deny(clippy::all)]
+//#![warn(clippy::all)]
 
 // FIXME: get rid of the unwraps
 // TODO: implement warnings for op hash collisions (will incredibly help to debug problems).

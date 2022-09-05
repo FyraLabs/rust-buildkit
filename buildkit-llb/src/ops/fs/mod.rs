@@ -3,7 +3,8 @@ use std::path::Path;
 
 use buildkit_proto::pb;
 
-use crate::serialization::{Context, Result};
+use crate::serialization::{Context};
+use anyhow::{Result};
 use crate::utils::OutputIdx;
 
 mod copy;
